@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @parcel %>
+
+<div>
+  <%= link_to "Edit this parcel", edit_parcel_path(@parcel) %> |
+  <%= link_to "Back to parcels", parcels_path %>
+
+  <%= button_to "Destroy this parcel", @parcel, method: :delete %>
+</div>

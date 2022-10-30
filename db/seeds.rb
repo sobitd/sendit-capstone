@@ -49,3 +49,45 @@ User.create!([
                }
 
              ])
+
+parcel_one = Parcel.create!(recipient_address: 'Moi Avenue 21',
+                            recipient_name: 'Laban Kimtai',
+                            recipient_contact: '0713245678',
+                            weight: 10,
+                            from: 8,
+                            destination: 12,
+                            user_id: 1)
+
+parcel_two = Parcel.create!(recipient_address: '16 Haille Selassie',
+                            recipient_name: 'Steven Kipsang',
+                            recipient_contact: '0712346789',
+                            weight: 4,
+                            from: 3,
+                            destination: 4,
+                            user_id: 2)
+
+parcel_three = Parcel.create(recipient_address: '2nd Harrambe Avenue',
+                             recipient_name: 'Shella Chep',
+                             recipient_contact: '0714852369',
+                             weight: 5,
+                             from: 5,
+                             destination: 13,
+                             user_id: 3)
+
+parcel_four = Parcel.create(recipient_address: 'Desai Rd Ngara',
+                            recipient_name: 'Grace Thungu',
+                            recipient_contact: '0789632541',
+                            weight: 8,
+                            from: 12,
+                            destination: 16,
+                            user_id: 4)
+
+parcel_five = Parcel.create(recipient_address: '33rd St Eastleigh',
+                            recipient_name: 'Elisha Nyakwar',
+                            recipient_contact: '0725465789',
+                            weight: 8,
+                            from: 1,
+                            destination: 6,
+                            user_id: 5)
+
+puts 'done'

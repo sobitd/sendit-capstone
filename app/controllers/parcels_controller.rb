@@ -1,13 +1,17 @@
 class ParcelsController < ApplicationController
-  before_action :set_parcel, only: %i[ show edit update destroy ]
+  skip_before_action :verify_authenticity_token
+  before_action :set_parcel, only: %i[show edit update destroy]
 
   # GET /parcels or /parcels.json
   def index
     @parcels = Parcel.all
+    render json: @parcels, status: :ok
   end
 
   # GET /parcels/1 or /parcels/1.json
   def show
+    @parcel = Parcel.find_by(id: params[:id])
+    render json: @parcel, status: :ok
   end
 
   # GET /parcels/new
@@ -16,8 +20,7 @@ class ParcelsController < ApplicationController
   end
 
   # GET /parcels/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /parcels or /parcels.json
   def create
@@ -25,7 +28,7 @@ class ParcelsController < ApplicationController
 
     respond_to do |format|
       if @parcel.save
-        format.html { redirect_to parcel_url(@parcel), notice: "Parcel was successfully created." }
+        format.html { redirect_to parcel_url(@parcel), notice: 'Parcel was successfully created.' }
         format.json { render :show, status: :created, location: @parcel }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +41,7 @@ class ParcelsController < ApplicationController
   def update
     respond_to do |format|
       if @parcel.update(parcel_params)
-        format.html { redirect_to parcel_url(@parcel), notice: "Parcel was successfully updated." }
+        format.html { redirect_to parcel_url(@parcel), notice: 'Parcel was successfully updated.' }
         format.json { render :show, status: :ok, location: @parcel }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +55,21 @@ class ParcelsController < ApplicationController
     @parcel.destroy
 
     respond_to do |format|
-      format.html { redirect_to parcels_url, notice: "Parcel was successfully destroyed." }
+      format.html { redirect_to parcels_url, notice: 'Parcel was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_parcel
-      @parcel = Parcel.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def parcel_params
-      params.require(:parcel).permit(:recipient_address, :recipient_name, :recipient_name, :weight, :from, :destination, :totalcost)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_parcel
+    @parcel = Parcel.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def parcel_params
+    params.require(:parcel).permit(:recipient_address, :recipient_name, :weight, :from, :destination,
+                                   :recipient_contact, :user_id)
+  end
 end

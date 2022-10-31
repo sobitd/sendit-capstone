@@ -1,6 +1,6 @@
 class ParcelsController < ApplicationController
-  skip_before_action :verify_authenticity_token
-  before_action :set_parcel, only: %i[show edit update destroy]
+  before_action :authorize
+  skip_before_action :authorize, only: [:index]
 
   # GET /parcels or /parcels.json
   def index
@@ -14,39 +14,20 @@ class ParcelsController < ApplicationController
     render json: @parcel, status: :ok
   end
 
-  # GET /parcels/new
-  def new
-    @parcel = Parcel.new
-  end
-
-  # GET /parcels/1/edit
-  def edit; end
-
   # POST /parcels or /parcels.json
   def create
-    @parcel = Parcel.new(parcel_params)
-
-    respond_to do |format|
-      if @parcel.save
-        format.html { redirect_to parcel_url(@parcel), notice: 'Parcel was successfully created.' }
-        format.json { render :show, status: :created, location: @parcel }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @parcel.errors, status: :unprocessable_entity }
-      end
-    end
+    @parcel = Parcel.create(user_id: session[:user_id])
+    render json: @parcel, status: :created
   end
 
   # PATCH/PUT /parcels/1 or /parcels/1.json
   def update
-    respond_to do |format|
-      if @parcel.update(parcel_params)
-        format.html { redirect_to parcel_url(@parcel), notice: 'Parcel was successfully updated.' }
-        format.json { render :show, status: :ok, location: @parcel }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @parcel.errors, status: :unprocessable_entity }
-      end
+    @parcel = Parcel.create(user_id: session[:user_id])
+    if @parcel
+      @parcel.update(parcel_params)
+      render json: @parcel
+    else
+      render json: { error: 'Parcel not found' }, status: :not_found
     end
   end
 
@@ -63,9 +44,6 @@ class ParcelsController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_parcel
-    @parcel = Parcel.find(params[:id])
-  end
 
   # Only allow a list of trusted parameters through.
   def parcel_params

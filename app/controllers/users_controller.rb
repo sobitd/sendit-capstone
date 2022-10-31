@@ -59,9 +59,4 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  private
-
-  # Only allow a list of trusted parameters through.
-  
 end

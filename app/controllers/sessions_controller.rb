@@ -12,6 +12,7 @@ class SessionsController < ApplicationController
       redirect_to root_path, notice: 'Logged in successfully'
     else
       render json: { errors: ['Invalid username or password'] }, status: :unauthorized
+      redirect_to "/sign_in"
     end
   end
 

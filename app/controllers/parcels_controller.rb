@@ -1,7 +1,5 @@
-class ParcelsController < ApplicationController
-  before_action :authorize
-  skip_before_action :authorize, only: [:index]
-
+class ParcelsController < ApplicationController 
+  #allow only admins to 
   # GET /parcels or /parcels.json
   def index
     @parcels = Parcel.all
